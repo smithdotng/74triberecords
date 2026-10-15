@@ -1,0 +1,347 @@
+@import "tailwindcss";
+
+/*
+  74 Tribe Studios — "studio after dark"
+  Deep malachite room, brass fittings, ivory type.
+  The woven-strip motif (aso-oke) is the one decorative signature; everything else stays quiet.
+*/
+@theme {
+  --color-ink: #0c231e;        /* page */
+  --color-room: #12322b;       /* raised surfaces */
+  --color-panel: #173d34;      /* hover / inputs */
+  --color-seam: #24503f;       /* hairlines */
+  --color-brass: #c9a45c;
+  --color-brass-soft: #e1c78f;
+  --color-ivory: #eee7d8;
+  --color-sage: #9fb5a8;       /* secondary text */
+  --color-moss: #6f8a7d;       /* tertiary text */
+  --color-ember: #e08a6a;      /* errors */
+
+  --font-display: "Bodoni Moda Variable", "Didot", "Bodoni 72", Georgia, serif;
+  --font-sans: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-tile: 4px;
+  --radius-pill: 999px;
+
+  --ease-studio: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background: var(--color-ink);
+    color: var(--color-ivory);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--color-brass) 45%, transparent);
+    color: var(--color-ivory);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+}
+
+@layer components {
+  /* Display type: Bodoni with optical sizing so hairlines stay crisp at every size */
+  .display {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+  }
+  .display-italic {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    height: 2.875rem;
+    padding: 0 1.4rem;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: 0.005em;
+    transition: background-color 0.25s var(--ease-studio), color 0.25s var(--ease-studio),
+      border-color 0.25s var(--ease-studio), transform 0.2s var(--ease-studio);
+    white-space: nowrap;
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  .btn-brass {
+    background: var(--color-brass);
+    color: var(--color-ink);
+  }
+  .btn-brass:hover {
+    background: var(--color-brass-soft);
+  }
+  .btn-ghost {
+    border: 1px solid var(--color-seam);
+    color: var(--color-ivory);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-brass);
+    color: var(--color-brass-soft);
+  }
+  .btn-quiet {
+    color: var(--color-sage);
+    padding: 0 0.75rem;
+  }
+  .btn-quiet:hover {
+    color: var(--color-ivory);
+  }
+  .btn:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .field {
+    width: 100%;
+    height: 3rem;
+    padding: 0 1rem;
+    background: var(--color-room);
+    border: 1px solid var(--color-seam);
+    border-radius: 6px;
+    color: var(--color-ivory);
+    transition: border-color 0.2s;
+  }
+  textarea.field {
+    height: auto;
+    padding: 0.8rem 1rem;
+    min-height: 6rem;
+  }
+  .field::placeholder {
+    color: var(--color-moss);
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-brass);
+  }
+
+  .hairline {
+    border-color: var(--color-seam);
+  }
+
+  /* The woven strip: narrow bands like aso-oke cloth. Used once per screen at most. */
+  .weave {
+    background-image: linear-gradient(
+      90deg,
+      var(--color-brass) 0 7%,
+      transparent 7% 9%,
+      var(--color-brass-soft) 9% 11%,
+      transparent 11% 16%,
+      #d08a6e 16% 19%,
+      transparent 19% 21%,
+      var(--color-brass) 21% 33%,
+      transparent 33% 35%,
+      var(--color-sage) 35% 37%,
+      transparent 37% 45%,
+      var(--color-brass-soft) 45% 47%,
+      transparent 47% 49%,
+      #d08a6e 49% 57%,
+      transparent 57% 60%,
+      var(--color-brass) 60% 62%,
+      transparent 62% 70%,
+      var(--color-sage) 70% 76%,
+      transparent 76% 78%,
+      var(--color-brass) 78% 92%,
+      transparent 92% 94%,
+      var(--color-brass-soft) 94% 100%
+    );
+  }
+
+  .scroll-row {
+    display: grid;
+    grid-auto-flow: column;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .scroll-row::-webkit-scrollbar {
+    display: none;
+  }
+  .scroll-row > * {
+    scroll-snap-align: start;
+  }
+
+  .prose-studio {
+    color: var(--color-sage);
+    line-height: 1.7;
+    max-width: 68ch;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* The one orchestrated moment: the home hero settles in on first load */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+@keyframes art-in {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes weave-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+.hero-art {
+  animation: art-in 1.4s var(--ease-studio) both;
+}
+.hero-line {
+  animation: hero-in 0.9s var(--ease-studio) both;
+}
+.hero-weave {
+  animation: weave-in 1.2s var(--ease-studio) 0.2s both;
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.sheet-enter {
+  animation: sheet-up 0.3s var(--ease-studio) both;
+}
+
+@keyframes eq {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+.eq span {
+  display: block;
+  width: 2px;
+  background: currentColor;
+  transform-origin: bottom;
+  animation: eq 1s ease-in-out infinite;
+}
+.eq span:nth-child(2) {
+  animation-delay: -0.35s;
+}
+.eq span:nth-child(3) {
+  animation-delay: -0.7s;
+}
+.eq.paused span {
+  animation-play-state: paused;
+}
+
+/* ---------- Persistent player ---------- */
+.player-box {
+  z-index: 20;
+  background: #000;
+  overflow: hidden;
+}
+.player-box[data-mode="stage"] {
+  position: absolute;
+  border-radius: 6px;
+}
+.player-box[data-mode="mini"] {
+  position: fixed;
+  z-index: 61;
+  left: 10px;
+  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 9px);
+  width: 82px;
+  height: 46px;
+  border-radius: 3px;
+}
+.player-box[data-mode="hidden"] {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  left: -10px;
+  bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.player-host,
+.player-host iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+:root {
+  --reels-top: calc(60px + env(safe-area-inset-top));
+  --tabbar-h: 64px;
+  --sidebar-w: 0px;
+  --minibar-h: 64px;
+}
+@media (min-width: 1024px) {
+  :root {
+    --reels-top: 0px;
+    --tabbar-h: 0px;
+    --sidebar-w: 15.5rem;
+    --minibar-h: 84px;
+  }
+  .player-box[data-mode="mini"] {
+    left: calc(var(--sidebar-w) + 18px);
+    bottom: 10px;
+    width: 114px;
+    height: 64px;
+  }
+}
