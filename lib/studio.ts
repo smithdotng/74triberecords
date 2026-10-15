@@ -32,8 +32,6 @@ export const SPACES: Space[] = [
       "Our signature conversation set. Deep seating arranged for natural eye-lines, so a host and up to four guests can talk the way they would at home — while every angle stays camera-ready.",
     capacity: 5,
     goodFor: ["Panel discussions", "Group podcasts", "Roundtables"],
-    image: "/studio/lounge-set.jpg",
-    imageFocus: "50% 38%",
     kind: "set",
   },
   {
