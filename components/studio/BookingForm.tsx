@@ -272,7 +272,18 @@ export function BookingForm({ initialSpace, today, prefill, available }: { initi
 
       {/* Summary */}
       <aside className="xl:sticky xl:top-8 xl:self-start">
-        <div className="rounded-xl border hairline bg-room/60 p-6">
+        <div className="overflow-hidden rounded-xl border hairline bg-room/60">
+          {spaceInfo.image && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={spaceInfo.slug}
+              src={spaceInfo.image}
+              alt={`The ${spaceInfo.name.toLowerCase()}`}
+              className="sheet-enter aspect-[16/10] w-full object-cover"
+              style={{ objectPosition: spaceInfo.imageFocus }}
+            />
+          )}
+          <div className="p-6">
           <h2 className="display text-2xl">Your session</h2>
           <dl className="mt-5 space-y-3 text-sm">
             <Row label="Space" value={spaceInfo.name} />
@@ -294,6 +305,7 @@ export function BookingForm({ initialSpace, today, prefill, available }: { initi
               ? "This is a request — nothing is charged now. We’ll confirm availability and pricing by email."
               : "Online booking isn’t connected yet. Contact the studio directly to book."}
           </p>
+          </div>
         </div>
       </aside>
     </form>

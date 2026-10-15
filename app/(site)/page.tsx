@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getLatestEpisodes, getReels, getShowEpisodes, getShows } from "@/lib/data";
 import { ReelRail } from "@/components/reels/ReelRail";
 import { SetPlan } from "@/components/studio/SetPlan";
+import { spaceBySlug } from "@/lib/studio";
 import { formatDate, formatLongDuration } from "@/lib/format";
 import { PlayButton } from "@/components/player/PlayButton";
 import { AddToPlaylist } from "@/components/AddToPlaylist";
@@ -13,6 +14,8 @@ import { EpisodeList } from "@/components/EpisodeList";
 import { ContinueWatching } from "@/components/ContinueWatching";
 import { Thumb } from "@/components/ui/Thumb";
 import { EmptyCatalogue } from "@/components/EmptyCatalogue";
+
+const lounge = spaceBySlug("lounge-set");
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = pageMeta({ path: "/" });
@@ -126,8 +129,19 @@ export default async function Home() {
                 </Link>
               </div>
             </div>
-            <div className="text-brass/80">
-              <SetPlan slug="lounge-set" className="w-full" />
+            <div className="overflow-hidden rounded-lg text-brass/80">
+              {lounge?.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={lounge.image}
+                  alt="The lounge set at 74 Tribe Studios"
+                  loading="lazy"
+                  className="aspect-[4/3] w-full object-cover"
+                  style={{ objectPosition: lounge.imageFocus }}
+                />
+              ) : (
+                <SetPlan slug="lounge-set" className="w-full" />
+              )}
             </div>
           </div>
         </section>

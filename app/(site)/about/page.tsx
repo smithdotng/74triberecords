@@ -87,7 +87,7 @@ export default function AboutPage() {
               <div className="overflow-hidden rounded-md bg-ink text-brass/80">
                 {s.image ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={s.image} alt={s.name} className="aspect-[400/260] w-full object-cover" />
+                  <img src={s.image} alt={`The ${s.name.toLowerCase()} at 74 Tribe Studios`} className="aspect-[400/260] w-full object-cover" style={{ objectPosition: s.imageFocus }} />
                 ) : (
                   <SetPlan slug={s.slug} className="w-full" />
                 )}
@@ -153,10 +153,10 @@ export default function AboutPage() {
 function SpaceRow({ space, flip }: { space: (typeof SPACES)[number]; flip: boolean }) {
   return (
     <article className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-      <div className={`overflow-hidden rounded-lg border hairline bg-room/60 text-brass/85 ${flip ? "lg:order-2" : ""}`}>
+      <div className={`overflow-hidden rounded-lg border hairline bg-room/60 text-brass/85 ${space.image ? "lg:aspect-[4/3]" : ""} ${flip ? "lg:order-2" : ""}`}>
         {space.image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={space.image} alt={space.name} className="aspect-[400/260] w-full object-cover" />
+          <img src={space.image} alt={`The ${space.name.toLowerCase()} at 74 Tribe Studios`} className="aspect-[4/3] w-full object-cover" style={{ objectPosition: space.imageFocus }} />
         ) : (
           <SetPlan slug={space.slug} className="w-full" />
         )}
