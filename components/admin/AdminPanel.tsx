@@ -265,7 +265,7 @@ function ShowForm({ show, onClose, onSaved }: { show: ShowDTO | null; onClose: (
           </div>
           <Field label="Hosts" name="hosts" defaultValue={show?.hosts.join(", ")} hint="Separate names with commas." />
           <Field label="Schedule" name="schedule" defaultValue={show?.schedule} placeholder="New episodes every Thursday" />
-          <Field label="Cover image link" name="coverImage" defaultValue={show?.coverImage} hint="Portrait 4:5 artwork works best. Leave empty to use the latest episode thumbnail." />
+          <Field label="Cover image link" name="coverImage" defaultValue={show?.coverImage} hint="Portrait 4:5 artwork works best — a full https:// link, or a file in /public such as /shows/massa-mentality-cover.jpg. Leave empty to use the latest episode thumbnail." />
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label htmlFor="f-accent" className="mb-2 block text-sm text-sage">

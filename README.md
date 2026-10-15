@@ -81,6 +81,10 @@ Reels that use licensed music don't come with a video file from the API; those a
 - Every page has Open Graph and Twitter tags (title, description, canonical URL, image). Shows use their cover art or latest episode thumbnail, episodes use their YouTube thumbnail, and a shared reel link (`/reels?r=…`) previews that reel. Other pages use the default share image. Account, library and admin pages are marked `noindex`.
 - Set `NEXT_PUBLIC_SITE_URL` to your live address (e.g. `https://74tribestudios.com`) **before building**, so preview links and images point to the right domain. Optionally set `NEXT_PUBLIC_TWITTER_HANDLE`.
 
+## Massa Mentality by Hugo
+
+The politics show for the 2027 election is set up in `scripts/shows.json` with its cover at `public/shows/massa-mentality-cover.jpg`. It's hidden until it has episodes: after `npm run seed`, open Studio admin, edit **Massa Mentality by Hugo**, paste the YouTube playlist (or channel) link, tick **Show on the site**, and save. The brand kit generators are in `scripts/assets/massa-mentality/`.
+
 ## Features
 
 - **Persistent player** — start an episode and keep browsing; it docks as a mini player with play/pause, next/previous and progress, then expands back onto the watch page without restarting. Lock-screen and headset controls via the Media Session API.

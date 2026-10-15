@@ -19,7 +19,10 @@ export const showInputSchema = z
       .string()
       .trim()
       .min(2, "Paste a YouTube playlist or channel link."),
-    coverImage: z.union([z.url("Cover image must be a full https:// link."), z.literal("")]).optional().default(""),
+    coverImage: z
+      .union([z.url("Cover image must be a full https:// link or a path like /shows/cover.jpg."), z.string().regex(/^\/[\w./-]+$/), z.literal("")])
+      .optional()
+      .default(""),
     accent: z
       .string()
       .regex(/^#[0-9a-fA-F]{6}$/, "Accent must be a hex colour like #C9A45C.")

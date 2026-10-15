@@ -1,15 +1,33 @@
 [
   {
+    "title": "Massa Mentality by Hugo",
+    "slug": "massa-mentality",
+    "tagline": "Politics, power and the road to Nigeria's 2027 election.",
+    "description": "Massa is the boss who expects to be served. In the run-up to the 2027 general election, Stanley Ebosie (Hugo) asks who really holds power in Nigeria — and what it will take for citizens to use it.",
+    "hosts": [
+      "Stanley Ebosie (Hugo)"
+    ],
+    "youtubePlaylistId": "REPLACE_WITH_YOUTUBE_PLAYLIST_LINK",
+    "coverImage": "/shows/massa-mentality-cover.jpg",
+    "accent": "#966CD2",
+    "schedule": "",
+    "order": 1,
+    "featured": true,
+    "published": false
+  },
+  {
     "title": "The Diary Of A CEO",
     "slug": "the-diary-of-a-ceo",
     "tagline": "Long-form conversations with founders, experts and public figures about success, health and life.",
     "description": "Steven Bartlett sits down with entrepreneurs, scientists, athletes and thinkers for unhurried, candid interviews about what it takes to build a business and a life.",
-    "hosts": ["Steven Bartlett"],
+    "hosts": [
+      "Steven Bartlett"
+    ],
     "youtubePlaylistId": "UUGq-a57w-aPwyi3pW7XLiHw",
     "coverImage": "",
     "accent": "#D9B26A",
     "schedule": "",
-    "order": 1,
-    "featured": true
+    "order": 2,
+    "featured": false
   }
 ]
