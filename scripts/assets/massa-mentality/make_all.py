@@ -139,6 +139,37 @@ def site_cover():
     c.alpha_composite(row, (70, H - row.height - 50))
     return grain(c)
 
+
+def whatsapp_status(headline="Who gets your vote?", kicker="The road to 2027", slugs=None):
+    """1080x1920 WhatsApp status. Top ~220px (name bar) and bottom ~260px (reply box) kept clear of key content."""
+    W, H = 1080, 1920
+    c = base(W, H, (0.5, 0.58), 0.8, 0.32)
+    d = ImageDraw.Draw(c)
+    tl = title_line(58); c.alpha_composite(tl, ((W - tl.width) // 2, 250))
+    weave(c, (W - 200) // 2, 340, 200, 7)
+    d.text((W // 2, 400), kicker.upper(), font=sans_b(30), fill=BRASS_SOFT, anchor="mt")
+    f = display_sb(104); lines, cur = [], ""
+    for wd in headline.split():
+        t = (cur + " " + wd).strip()
+        if d.textlength(t, font=f) <= 920 or not cur: cur = t
+        else: lines.append(cur); cur = wd
+    lines.append(cur)
+    y = 455
+    for i, ln in enumerate(lines):
+        last = i == len(lines) - 1 and len(lines) > 1
+        d.text((W // 2, y), ln, font=italic(104) if last else f, fill=BRASS_SOFT if last else IVORY, anchor="mt"); y += 116
+    slugs = slugs or [x["slug"] for x in CANDIDATES]
+    if len(slugs) == 4:
+        g = grid2(860, gap_ratio=0.07, slugs=slugs, aspect=1.02, name_size=42)
+    else:
+        g = lineup(900, gap_ratio=0.07, slugs=slugs, aspect=1.45, name_size=48)
+    gy = y + 40
+    g.thumbnail((900, 1600 - gy), Image.LANCZOS)
+    c.alpha_composite(g, ((W - g.width) // 2, gy))
+    d.text((W // 2, 1625), ELECTION_DAY, font=sans_b(32), fill=IVORY, anchor="mt")
+    d.text((W // 2, 1672), "Watch Massa Mentality on YouTube", font=sans(30), fill=SAGE, anchor="mt")
+    return grain(c)
+
 # ---------------- Logos ----------------
 def logos():
     save(title_block(1800), "logo/massa-mentality-stacked-ivory.png")
@@ -161,6 +192,8 @@ def main():
     save(end_screen(), "youtube/end-screen-1920x1080.png")
     save(insta_post(), "social/instagram-post-1080.jpg")
     save(insta_story(), "social/instagram-story-1080x1920.jpg")
+    save(whatsapp_status(), "whatsapp/status-who-gets-your-vote-1080x1920.jpg")
+    save(whatsapp_status("Tinubu or Obi: who takes it?", kicker="New episode", slugs=["tinubu", "obi"]), "whatsapp/status-head-to-head-1080x1920.jpg")
     save(site_cover(), "site/massa-mentality-cover-1200x1500.jpg", 90)
     save(lineup(2400, gap_ratio=0.07, aspect=1.30, name_size=90), "logo/candidate-lineup.png")
     logos()
