@@ -1,12 +1,18 @@
 from kit import *
+from ballot import ballot_art
+
+def art_h(height, seed=7):
+    a = ballot_art(1000, seed=seed)
+    return a.resize((int(a.width * height / a.height), height), Image.LANCZOS)
+
 
 # ---------------- Podcast cover 3000² ----------------
 def podcast_cover(S=3000):
     c = base(S, S, (0.70, 0.55), 0.62, 0.34)
     tb = title_block(int(S * 0.62))
     top = int(S * 0.08) + tb.height + int(S * 0.02)
-    h = host(S - top, keep=0.60)
-    place_host(c, h, S - h.width + int(S * 0.04), S - h.height)
+    a = art_h(int((S - top) * 0.98))
+    c.alpha_composite(a, (S - a.width - int(S * 0.03), S - a.height - int(S * 0.02)))
     c.alpha_composite(tb, (int(S * 0.07), int(S * 0.08)))
     d = ImageDraw.Draw(c)
     weave(c, int(S * 0.07), int(S * 0.08) + tb.height + int(S * 0.04), int(S * 0.20), int(S * 0.008))
@@ -19,8 +25,10 @@ def podcast_cover(S=3000):
 def banner():
     W, H = 2560, 1440
     c = base(W, H, (0.72, 0.45), 0.55, 0.32)
-    h = host(980, keep=0.74)
-    place_host(c, h, 1660, 455, fade=0.25)
+    # ballot box sits just right of the mobile safe area (x > 2053) so phones never show it cut in half;
+    # desktops (full width, y 508–931) and TVs see it whole
+    a = art_h(740)
+    c.alpha_composite(a, (1940, 160))
     tl = title_line(120)
     x0, y0 = 527, 580
     c.alpha_composite(tl, (x0, y0))
@@ -44,8 +52,8 @@ def thumbnail(title=None, ep=None, photo=True):
     W, H = 1280, 720
     c = base(W, H, (0.80, 0.40), 0.55, 0.38)
     if photo:
-        h = host(H - 30, keep=0.58)
-        place_host(c, h, W - h.width + 40, 30, fade=0.12)
+        a = art_h(H - 40, seed=(ep or 7) + 3)
+        c.alpha_composite(a, (W - a.width - 40, 20))
     d = ImageDraw.Draw(c)
     tl = title_line(54); c.alpha_composite(tl, (56, 48))
     text = title or "Your headline here"
@@ -88,8 +96,8 @@ def end_screen():
 def insta_post(kicker="New episode", line="Who is the real Massa?"):
     S = 1080
     c = base(S, S, (0.78, 0.55), 0.6, 0.34)
-    h = host(int(S * 0.70), keep=0.58)
-    place_host(c, h, S - h.width + 50, S - h.height)
+    a = art_h(int(S * 0.60))
+    c.alpha_composite(a, (S - a.width - 30, S - a.height - 30))
     tl = title_line(56); c.alpha_composite(tl, (70, 70))
     d = ImageDraw.Draw(c)
     d.text((70, 430), kicker, font=sans_b(34), fill=BRASS_SOFT)
@@ -113,8 +121,8 @@ def insta_story():
     weave(c, 90, y, 200, 7)
     d.text((90, y + 30), "New episode · link in bio", font=sans(38), fill=SAGE)
     top = y + 140
-    h = host(H - top, keep=0.70)
-    place_host(c, h, (W - h.width) // 2 + 40, H - h.height)
+    a = art_h(int((H - top) * 0.92))
+    c.alpha_composite(a, ((W - a.width) // 2, H - a.height - 80))
     return grain(c)
 
 def site_cover():
@@ -122,8 +130,8 @@ def site_cover():
     c = base(W, H, (0.62, 0.62), 0.7, 0.34)
     tb = title_block(int(W * 0.80)); c.alpha_composite(tb, (90, 90))
     top = 90 + tb.height + 70
-    h = host(H - top, keep=0.64)
-    place_host(c, h, W - h.width + 40, H - h.height)
+    a = art_h(int((H - top) * 0.96))
+    c.alpha_composite(a, (W - a.width - 40, H - a.height - 30))
     weave(c, 90, 90 + tb.height + 30, 180, 6)
     return grain(c)
 
@@ -146,7 +154,7 @@ if __name__ == "__main__":
     save(insta_post(), "social/instagram-post-1080.jpg")
     save(insta_story(), "social/instagram-story-1080x1920.jpg")
     save(site_cover(), "site/massa-mentality-cover-1200x1500.jpg", 90)
-    save(host(1600, keep=1.0), "photos/hugo-silhouette.png")
+    save(ballot_art(2000), "logo/ballot-illustration.png")
     logos()
     # preview
     P = Image.new("RGB", (1700, 1130), (55, 55, 55))

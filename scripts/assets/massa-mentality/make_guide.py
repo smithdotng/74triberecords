@@ -42,13 +42,14 @@ d.text((M, y + 40), "Brand guide", font=display(64), fill=IVORY)
 d.text((M, y + 130), "Politics, power and the road to 2027.\nHosted by Stanley Ebosie (Hugo).\nA 74 Tribe Studios show.", font=sans(30), fill=SAGE, spacing=12)
 m = monogram(300); mask = Image.new("L", (300, 300), 0); ImageDraw.Draw(mask).ellipse((0, 0, 299, 299), fill=255)
 c.paste(m, (M, H - M - 300), mask)
-d.text((M + 340, H - M - 170), "MM monogram", font=sans_b(28), fill=IVORY)
-d.text((M + 340, H - M - 130), "Avatar and watermark", font=sans(24), fill=SAGE)
+d.text((M, H - M - 300 - 40), "MM monogram  ·  Ballot illustration", font=sans_b(24), fill=IVORY)
 
 cx = 900
 d.line((cx - 60, M, cx - 60, H - M), fill=SEAM, width=2)
 d.text((cx, M), "One family with 74 Tribe Studios", font=display(54), fill=IVORY)
-d.text((cx, M + 80), "Massa Mentality uses the studio’s own look — deep malachite, brass and ivory,\nBodoni headlines and the woven aso-oke strip — so the show and the platform\nread as one. Hugo is always lit by a soft brass glow, never boxed in.", font=sans(28), fill=SAGE, spacing=12)
+from ballot import ballot_art
+ba = ballot_art(330); c.alpha_composite(ba, (M + 330, H - M - ba.height - 10))
+d.text((cx, M + 80), "Massa Mentality uses the studio’s own look — deep malachite, brass and ivory,\nBodoni headlines and the woven aso-oke strip — so the show and the platform\nread as one. The election is told through one illustration: a ballot box marked 2027,\na ballot with an inked thumbprint going in, and woven-strip confetti bursting out.", font=sans(28), fill=SAGE, spacing=12)
 
 py = M + 290
 d.text((cx, py), "Colour", font=sans_b(28), fill=BRASS_SOFT)
@@ -74,8 +75,8 @@ d.text((cx + 450, ty + 300), "Labels, captions, descriptions.", font=sans(24), f
 
 ry = H - M - 120
 d.text((cx, ry), "Do", font=sans_b(28), fill=BRASS_SOFT)
-d.text((cx, ry + 40), "Keep Hugo on the right with the glow behind him.\nLeave space — the dark is part of the look.", font=sans(24), fill=IVORY, spacing=8)
+d.text((cx, ry + 40), "Keep the ballot box on the right with the glow behind it.\nLeave space — the dark is part of the look.", font=sans(24), fill=IVORY, spacing=8)
 d.text((cx + 760, ry), "Don’t", font=sans_b(28), fill=BRASS_SOFT)
-d.text((cx + 760, ry + 40), "Use party colours, flags or candidate logos.\nPut text over Hugo’s face. Recolour the woven strip.", font=sans(24), fill=IVORY, spacing=8)
+d.text((cx + 760, ry + 40), "Use party colours, flags or candidate logos.\nPut text over the ballot box. Recolour the woven strip.", font=sans(24), fill=IVORY, spacing=8)
 grain(c, 0.015).save(os.path.join(OUT, "logo", "massa-mentality-brand-guide.png"), optimize=True)
 grain(c, 0.015).resize((1200, 750)).save("guide_prev.png")

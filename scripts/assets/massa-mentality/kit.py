@@ -26,7 +26,7 @@ italic = lambda s: font("bodoni-italic", s)
 sans = lambda s: font("hanken-medium", s)
 sans_b = lambda s: font("hanken-semibold", s)
 
-HOST = Image.open(os.path.join(HERE, "host_shape.png")).convert("RGBA")  # outline only; no photo pixels
+HOST = None  # host imagery removed from the brand
 MARK74 = Image.open(os.path.join(HERE, "logo-mark.png")).convert("RGBA")
 
 def bbox(d, s, f):
