@@ -19,7 +19,7 @@ CANDIDATES = [
     {"slug": "tinubu",  "name": "Bola Tinubu",     "short": "Tinubu",  "party": "APC", "party_full": "All Progressives Congress"},
     {"slug": "atiku",   "name": "Atiku Abubakar",  "short": "Atiku",   "party": "ADC", "party_full": "African Democratic Congress"},
     {"slug": "obi",     "name": "Peter Obi",       "short": "Obi",     "party": "NDC", "party_full": "Nigeria Democratic Congress"},
-    {"slug": "makinde", "name": "Seyi Makinde",    "short": "Makinde", "party": "APM", "party_full": "Allied Peoples Movement"},
+    {"slug": "makinde", "name": "Seyi Makinde",    "short": "Makinde", "party": "APM", "party_full": "Allied Peoples Movement", "zoom": 0.80, "top": 0.20},
 ]
 
 _cut_cache = {}
@@ -116,7 +116,10 @@ def portrait(c, slug, w, h, label=True, name_size=None):
         if fh < H * 0.88:
             sc = (H * 0.88) / cut.height
         fig = cut.resize((max(1, int(cut.width * sc)), max(1, int(cut.height * sc))), Image.LANCZOS)
-        top = int(H * 0.10)
+        z = cand.get("zoom", 1.0)
+        if z != 1.0:
+            fig = fig.resize((int(fig.width * z), int(fig.height * z)), Image.LANCZOS)
+        top = int(H * cand.get("top", 0.10))
         inner.alpha_composite(fig, ((W - fig.width) // 2, top), )
 
     # soft ink fade at the bottom so the name sits cleanly

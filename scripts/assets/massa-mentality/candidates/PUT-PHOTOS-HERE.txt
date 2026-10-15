@@ -1,2 +1,0 @@
-Put candidate photos here: tinubu.jpg, atiku.jpg, obi.jpg, makinde.jpg
-Then run: python3 make_artwork.py (from the kit folder)
