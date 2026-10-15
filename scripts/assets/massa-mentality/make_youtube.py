@@ -59,7 +59,19 @@ def thumbnail(title=None, ep=None, photo=None):
     c = Image.new("RGBA", (W, H), PAPER + (255,))
     # right panel: host photo, or the inked thumb as a placeholder
     px = 690
-    if photo:
+    cut = Image.open(photo) if photo else None
+    if cut is not None and cut.mode in ("RGBA", "LA") and cut.getchannel("A").getextrema()[0] < 250:
+        # transparent cut-out: host stands on paper in front of the inked thumb
+        cut = cut.convert("RGBA").crop(cut.getbbox())
+        stamp(c, 760, (px + 290, 400), VIOLET, rotate=-14)
+        keep = cut.crop((0, 0, cut.width, int(cut.height * 0.58)))
+        s = 520 / keep.width
+        keep = keep.resize((520, int(keep.height * s)), Image.LANCZOS)
+        if keep.height < H - 40:
+            s2 = (H - 40) / keep.height
+            keep = keep.resize((int(keep.width * s2), H - 40), Image.LANCZOS)
+        c.alpha_composite(keep, (W - keep.width + 30, H - keep.height))
+    elif photo:
         p = Image.open(photo).convert("RGB")
         r = max((W - px) / p.width, H / p.height)
         p = p.resize((int(p.width * r), int(p.height * r)), Image.LANCZOS)
