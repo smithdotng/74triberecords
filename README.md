@@ -66,6 +66,15 @@ Long-lived tokens last 60 days; the app refreshes the token weekly and stores th
 
 Reels that use licensed music don't come with a video file from the API; those automatically fall back to Instagram's embedded player. Hiding an imported reel in admin keeps it off the site even after future imports.
 
+## Studio: About and Bookings
+
+- **About** (`/about`) presents the facility and each space: the lounge set (up to 5 people), coffee table set, news set, full set, the recording studio, meeting rooms and lounges. Names, descriptions, capacities and photos live in `lib/studio.ts`. Until photos are added, each space shows a floor-plan drawing; to use a photo, put it in `public/studio/` and set `image: "/studio/your-photo.jpg"` on that space.
+- **Book a session** (`/book`) lets anyone request a space, date, start time and length. Times already held are crossed out, and the server refuses overlapping requests. The full set occupies the whole floor, so it can't overlap the lounge, coffee table or news sets.
+- New requests appear in **Studio admin → Bookings**, where the team confirms, declines or cancels them and can add a note (price, call time). Signed-in guests see their bookings on their account page.
+- Studio hours, maximum session length and how far ahead people can book are in `BOOKING_RULES` in `lib/studio.ts`.
+- Add `NEXT_PUBLIC_STUDIO_EMAIL`, `NEXT_PUBLIC_STUDIO_PHONE` and `NEXT_PUBLIC_STUDIO_ADDRESS` to show contact details on both pages.
+- **Emails (optional):** with `SMTP_HOST`, `SMTP_USER` and `SMTP_PASS` set (Hostinger works: `smtp.hostinger.com`, port 465), guests get a confirmation of their request and of the team's decision, and the team gets each new request at `BOOKINGS_EMAIL` (or the first `ADMIN_EMAILS` address).
+
 ## Features
 
 - **Persistent player** — start an episode and keep browsing; it docks as a mini player with play/pause, next/previous and progress, then expands back onto the watch page without restarting. Lock-screen and headset controls via the Media Session API.

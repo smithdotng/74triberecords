@@ -62,6 +62,18 @@ const paths = {
     </g>
   ),
   arrowLeft: <path d="M19 12H5M11 6l-6 6 6 6" />,
+  calendar: (
+    <g>
+      <rect x="4" y="5.5" width="16" height="14.5" rx="2.5" />
+      <path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" />
+    </g>
+  ),
+  studio: (
+    <g>
+      <rect x="9" y="3.5" width="6" height="10" rx="3" />
+      <path d="M6 11a6 6 0 0 0 12 0M12 17v3.5M8.5 20.5h7" />
+    </g>
+  ),
   reel: (
     <g>
       <rect x="6" y="3" width="12" height="18" rx="2.5" />

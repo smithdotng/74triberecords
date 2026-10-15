@@ -7,6 +7,10 @@ import { ReelsAdmin } from "@/components/admin/ReelsAdmin";
 import { isYouTubeConfigured } from "@/lib/youtube";
 import { isDemo } from "@/lib/demo";
 import { AdminPanel } from "@/components/admin/AdminPanel";
+import { BookingsAdmin } from "@/components/admin/BookingsAdmin";
+import { getAdminBookings } from "@/lib/bookings";
+import { mailConfigured } from "@/lib/mail";
+import { studioToday } from "@/lib/studio";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Studio admin" };
@@ -32,10 +36,16 @@ export default async function AdminPage() {
       </div>
     );
   }
-  const [shows, reels] = await Promise.all([getShows({ includeUnpublished: true }), getReels({ limit: 200, includeHidden: true })]);
+  const today = studioToday();
+  const [shows, reels, bookings] = await Promise.all([
+    getShows({ includeUnpublished: true }),
+    getReels({ limit: 200, includeHidden: true }),
+    getAdminBookings(today).catch(() => []),
+  ]);
   return (
     <>
       <AdminPanel initialShows={shows ?? []} youtubeReady={isYouTubeConfigured()} />
+      <BookingsAdmin initial={bookings} today={today} mailReady={mailConfigured()} />
       <ReelsAdmin
         initialReels={reels ?? []}
         shows={(shows ?? []).map(({ slug, title }) => ({ slug, title }))}

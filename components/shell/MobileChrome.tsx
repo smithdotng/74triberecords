@@ -16,6 +16,10 @@ export function MobileHeader() {
       style={{ paddingTop: "env(safe-area-inset-top)", height: "calc(60px + env(safe-area-inset-top))" }}
     >
       <Logo />
+      <div className="flex items-center gap-4">
+      <Link href="/book" className="rounded-full border border-brass/60 px-3.5 py-1.5 text-sm font-medium text-brass-soft">
+        Book
+      </Link>
       {data?.user ? (
         <Link href="/account" aria-label="Your account">
           <Avatar name={data.user.name} image={data.user.image} size={32} />
@@ -25,6 +29,7 @@ export function MobileHeader() {
           Sign in
         </Link>
       )}
+      </div>
     </header>
   );
 }

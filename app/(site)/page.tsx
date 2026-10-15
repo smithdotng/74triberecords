@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getLatestEpisodes, getReels, getShowEpisodes, getShows } from "@/lib/data";
 import { ReelRail } from "@/components/reels/ReelRail";
+import { SetPlan } from "@/components/studio/SetPlan";
 import { formatDate, formatLongDuration } from "@/lib/format";
 import { PlayButton } from "@/components/player/PlayButton";
 import { AddToPlaylist } from "@/components/AddToPlaylist";
@@ -103,6 +104,30 @@ export default async function Home() {
             <EpisodeRail episodes={latestList.slice(0, 8)} />
           </section>
         )}
+
+        <section className="mt-20 overflow-hidden rounded-xl border hairline bg-room/50" aria-labelledby="studio-band">
+          <div className="grid items-center gap-8 p-6 sm:p-10 lg:grid-cols-[1.2fr_1fr] lg:gap-14">
+            <div>
+              <h2 id="studio-band" className="display text-4xl text-balance sm:text-5xl">
+                Record your show at 74 Tribe Studios
+              </h2>
+              <p className="mt-4 max-w-xl text-lg text-sage">
+                Lounge, coffee table, news and full sets, a world-class recording studio, meeting rooms and lounges — ready for your next episode.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link href="/book" className="btn btn-brass">
+                  Book a session
+                </Link>
+                <Link href="/about" className="btn btn-ghost">
+                  Tour the studio
+                </Link>
+              </div>
+            </div>
+            <div className="text-brass/80">
+              <SetPlan slug="lounge-set" className="w-full" />
+            </div>
+          </div>
+        </section>
 
         {latestList.length > 8 && (
           <section className="mt-16 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2.4fr)] lg:gap-14" aria-labelledby="archive-heading">
