@@ -1,7 +1,7 @@
 """Massa Mentality by Hugo — artwork in the 74 Tribe Studios house style (malachite, brass, ivory, Bodoni)."""
 import os
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FD = os.path.join(HERE, "fonts")
@@ -26,7 +26,7 @@ italic = lambda s: font("bodoni-italic", s)
 sans = lambda s: font("hanken-medium", s)
 sans_b = lambda s: font("hanken-semibold", s)
 
-HOST = Image.open(os.path.join(HERE, "host_trim.png")).convert("RGBA")
+HOST = Image.open(os.path.join(HERE, "host_shape.png")).convert("RGBA")  # outline only; no photo pixels
 MARK74 = Image.open(os.path.join(HERE, "logo-mark.png")).convert("RGBA")
 
 def bbox(d, s, f):
@@ -58,10 +58,26 @@ def weave(c, x, y, w, h):
     for a, b, col in WEAVE:
         d.rectangle((x + w * a / 100, y, x + w * b / 100 - 1, y + h), fill=col)
 
+
+def silhouette(img):
+    """Dark figure with a thin brass rim light — keeps the pose, hides the face."""
+    a = img.getchannel("A")
+    w = img.width
+    fill = Image.new("RGBA", img.size, (7, 20, 16, 255)); fill.putalpha(a)
+    # rim: the outer edge of the shape, brightest along the top and sides
+    inner = a.filter(ImageFilter.MinFilter(max(3, (w // 140) | 1)))
+    rim = ImageChops.subtract(a, inner).filter(ImageFilter.GaussianBlur(max(1, w // 600)))
+    ys = np.linspace(1.0, 0.35, img.height)[:, None]
+    rim_a = (np.asarray(rim).astype(float) * ys).clip(0, 255).astype(np.uint8)
+    rim_l = Image.new("RGBA", img.size, BRASS_SOFT + (0,)); rim_l.putalpha(Image.fromarray(rim_a))
+    out = fill.copy(); out.alpha_composite(rim_l)
+    return out
+
 def host(height, keep=0.62):
     h = HOST.crop((0, 0, HOST.width, int(HOST.height * keep)))
     s = height / h.height
-    return h.resize((int(h.width * s), height), Image.LANCZOS)
+    h = h.resize((int(h.width * s), height), Image.LANCZOS)
+    return silhouette(h)
 
 def place_host(c, h, x, y, fade=0.18):
     """Soft shadow + fade the bottom of the cut-out into the background."""

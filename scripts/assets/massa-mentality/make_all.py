@@ -146,7 +146,7 @@ if __name__ == "__main__":
     save(insta_post(), "social/instagram-post-1080.jpg")
     save(insta_story(), "social/instagram-story-1080x1920.jpg")
     save(site_cover(), "site/massa-mentality-cover-1200x1500.jpg", 90)
-    save(HOST, "photos/hugo-cutout.png")
+    save(host(1600, keep=1.0), "photos/hugo-silhouette.png")
     logos()
     # preview
     P = Image.new("RGB", (1700, 1130), (55, 55, 55))
