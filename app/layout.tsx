@@ -6,21 +6,20 @@ import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { getSession } from "@/lib/auth";
 
-const siteUrl = process.env.NEXTAUTH_URL ?? "http://localhost:3000";
+import { pageMeta, SITE_NAME, siteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: { default: "74 Tribe Studios", template: "%s — 74 Tribe Studios" },
-  description: "Watch every show from 74 Tribe Studios. Sign in to build playlists and pick up where you left off.",
-  applicationName: "74 Tribe Studios",
+  metadataBase: new URL(siteUrl()),
+  // Site-wide defaults; every page also sets its own via pageMeta()
+  ...(({ alternates: _a, ...rest }) => rest)(pageMeta({ path: "/" })),
+  title: { default: SITE_NAME, template: `%s — ${SITE_NAME}` },
+  applicationName: SITE_NAME,
   appleWebApp: { capable: true, title: "74 Tribe", statusBarStyle: "black-translucent" },
   formatDetection: { telephone: false },
-  openGraph: {
-    type: "website",
-    siteName: "74 Tribe Studios",
-    title: "74 Tribe Studios",
-    description: "Conversations worth sitting down for.",
-  },
+  ...(process.env.NEXT_PUBLIC_FACEBOOK_APP_ID ? { facebook: { appId: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID } } : {}),
+  ...(process.env.NEXT_PUBLIC_TWITTER_HANDLE
+    ? { twitter: { ...pageMeta({ path: "/" }).twitter, site: process.env.NEXT_PUBLIC_TWITTER_HANDLE } }
+    : {}),
 };
 
 export const viewport: Viewport = {

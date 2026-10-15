@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { getLatestEpisodes, getShows } from "@/lib/data";
 import { ShowTile } from "@/components/ShowTile";
 import { EmptyCatalogue } from "@/components/EmptyCatalogue";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Shows" };
+export const metadata: Metadata = pageMeta({
+  title: "Shows",
+  description: "Every series recorded at 74 Tribe Studios — conversations on culture, business, faith, money and the arts.",
+  path: "/shows",
+});
 
 export default async function ShowsPage() {
   const [shows, latest] = await Promise.all([getShows(), getLatestEpisodes(60)]);

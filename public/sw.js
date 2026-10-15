@@ -4,11 +4,11 @@
  * - YouTube thumbnails: stale-while-revalidate so libraries feel instant
  * - API, auth and YouTube player requests are never cached
  */
-const VERSION = "t74-v1";
+const VERSION = "t74-v2";
 const STATIC = `${VERSION}-static`;
 const PAGES = `${VERSION}-pages`;
 const IMAGES = `${VERSION}-images`;
-const PRECACHE = ["/offline", "/icons/icon-192.png", "/icons/icon-512.png", "/manifest.webmanifest"];
+const PRECACHE = ["/offline", "/brand/logo-mark.png", "/brand/logo-wordmark.png", "/icons/icon-192.png", "/icons/icon-512.png", "/manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(STATIC).then((c) => c.addAll(PRECACHE)).then(() => self.skipWaiting()));
@@ -58,7 +58,7 @@ self.addEventListener("fetch", (event) => {
   if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/_next/data")) return;
 
   // Immutable build assets and our own images
-  if (url.pathname.startsWith("/_next/static/") || url.pathname.startsWith("/icons/") || url.pathname.startsWith("/demo/")) {
+  if (url.pathname.startsWith("/_next/static/") || url.pathname.startsWith("/icons/") || url.pathname.startsWith("/brand/") || url.pathname.startsWith("/demo/")) {
     event.respondWith(
       caches.match(req).then(
         (cached) =>

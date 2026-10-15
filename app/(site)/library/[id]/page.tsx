@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { notFound, redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth";
 import { getUserPlaylist } from "@/lib/data";
@@ -9,9 +10,10 @@ export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ id: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const id = (await params).id;
   const user = await requireUser();
-  const p = user ? await getUserPlaylist(user.id, (await params).id) : null;
-  return { title: p?.name ?? "Playlist" };
+  const p = user ? await getUserPlaylist(user.id, id) : null;
+  return pageMeta({ title: p?.name ?? "Playlist", path: `/library/${id}`, noindex: true });
 }
 
 export default async function PlaylistPage({ params }: Props) {

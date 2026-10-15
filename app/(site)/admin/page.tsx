@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { redirect } from "next/navigation";
 import { requireAdmin, requireUser } from "@/lib/auth";
 import { getReels, getShows } from "@/lib/data";
@@ -13,7 +14,7 @@ import { mailConfigured } from "@/lib/mail";
 import { studioToday } from "@/lib/studio";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Studio admin" };
+export const metadata: Metadata = pageMeta({ title: "Studio admin", path: "/admin", noindex: true });
 
 export default async function AdminPage() {
   if (isDemo()) {

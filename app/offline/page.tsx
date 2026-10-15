@@ -1,8 +1,9 @@
 import { Logo } from "@/components/shell/Logo";
+import { pageMeta } from "@/lib/seo";
 import { RetryButton } from "@/components/RetryButton";
 
 export const dynamic = "force-static";
-export const metadata = { title: "Offline" };
+export const metadata = pageMeta({ title: "Offline", path: "/offline", noindex: true });
 
 export default function Offline() {
   return (

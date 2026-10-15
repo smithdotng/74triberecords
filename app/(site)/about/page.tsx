@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMeta } from "@/lib/seo";
 import { SPACES, STUDIO_CONTACT } from "@/lib/studio";
 import { SetPlan } from "@/components/studio/SetPlan";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "About the studio",
   description:
-    "74 Tribe Studios is a premium recording and streaming facility for shows and podcast hosts — lounge, coffee table, news and full sets, a world-class recording studio, meeting rooms and lounges.",
-};
+    "A premium recording and streaming facility for shows and podcast hosts — lounge, coffee table, news and full sets, a world-class recording studio, meeting rooms and lounges.",
+  path: "/about",
+});
 
 const STEPS = [
   { title: "Request a session", body: "Choose a space, a date and how long you need. It takes two minutes." },

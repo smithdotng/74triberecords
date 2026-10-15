@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth";
@@ -11,7 +12,7 @@ import { isDbConfigured } from "@/lib/db";
 import { hourLabel } from "@/lib/studio";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Your account" };
+export const metadata: Metadata = pageMeta({ title: "Your account", path: "/account", noindex: true });
 
 export default async function AccountPage() {
   const user = await requireUser();

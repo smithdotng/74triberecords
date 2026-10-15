@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cleanDescription, pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getEpisode, getShowEpisodes, getUserPlaylist } from "@/lib/data";
@@ -16,13 +17,17 @@ export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ videoId: string }>; searchParams: Promise<{ list?: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const data = await getEpisode((await params).videoId);
-  if (!data) return { title: "Episode not found" };
-  return {
-    title: data.episode.title,
-    description: data.episode.description.slice(0, 160),
-    openGraph: { images: [data.episode.thumbnail], type: "video.episode" },
-  };
+  const videoId = (await params).videoId;
+  const data = await getEpisode(videoId);
+  if (!data) return pageMeta({ title: "Episode not found", path: `/watch/${videoId}`, noindex: true });
+  const { episode, show } = data;
+  return pageMeta({
+    title: show ? `${episode.title} | ${show.title}` : episode.title,
+    description: cleanDescription(episode.description, show?.tagline || `Watch ${episode.title} on 74 Tribe Studios.`),
+    path: `/watch/${videoId}`,
+    image: { url: episode.thumbnail, width: 1280, height: 720, alt: episode.title },
+    type: "video.episode",
+  });
 }
 
 export default async function WatchPage({ params, searchParams }: Props) {

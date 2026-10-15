@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMeta } from "@/lib/seo";
 import { getSession } from "@/lib/auth";
 import { isDbConfigured } from "@/lib/db";
 import { STUDIO_CONTACT, studioToday } from "@/lib/studio";
 import { BookingForm } from "@/components/studio/BookingForm";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Book a session",
-  description: "Request a recording or streaming session at 74 Tribe Studios.",
-};
+  description: "Request a session on our lounge, coffee table, news or full set, or in the recording studio. Pick a time and we'll confirm by email.",
+  path: "/book",
+});
 
 export default async function BookPage({ searchParams }: { searchParams: Promise<{ space?: string }> }) {
   const { space } = await searchParams;

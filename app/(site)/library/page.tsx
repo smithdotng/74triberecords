@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth";
@@ -7,7 +8,7 @@ import { isDemo } from "@/lib/demo";
 import { NewPlaylistButton } from "@/components/library/NewPlaylistButton";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Your library" };
+export const metadata: Metadata = pageMeta({ title: "Your library", path: "/library", noindex: true });
 
 export default async function LibraryPage() {
   if (isDemo()) {

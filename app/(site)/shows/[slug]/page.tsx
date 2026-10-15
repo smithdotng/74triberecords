@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cleanDescription, pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { after } from "next/server";
@@ -15,13 +16,22 @@ export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ slug: string }>; searchParams: Promise<{ sort?: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const show = await getShow((await params).slug);
-  if (!show) return { title: "Show not found" };
-  return {
+  const slug = (await params).slug;
+  const show = await getShow(slug);
+  if (!show) return pageMeta({ title: "Show not found", path: `/shows/${slug}`, noindex: true });
+  const latest = show.coverImage ? null : (await getShowEpisodes(slug))?.[0];
+  const image = show.coverImage
+    ? { url: show.coverImage, alt: show.title }
+    : latest
+      ? { url: latest.thumbnail, width: 1280, height: 720, alt: show.title }
+      : null;
+  return pageMeta({
     title: show.title,
-    description: show.tagline || show.description.slice(0, 160),
-    openGraph: show.coverImage ? { images: [show.coverImage] } : undefined,
-  };
+    description: show.tagline ? `${show.tagline} ${show.hosts.length ? `Hosted by ${show.hosts.join(", ")}.` : ""}` : cleanDescription(show.description),
+    path: `/shows/${slug}`,
+    image,
+    type: "video.other",
+  });
 }
 
 export default async function ShowPage({ params, searchParams }: Props) {

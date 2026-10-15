@@ -1,4 +1,4 @@
-"""Generates PWA icons and the demo catalogue artwork. Run: python3 scripts/assets/make_images.py <fonts_dir>"""
+"""Generates the demo catalogue artwork (sample covers, thumbnails and reels). Run: python3 scripts/assets/make_images.py <fonts_dir>"""
 import sys, random, math
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
@@ -32,24 +32,7 @@ def centered(d, box, text, font, fill):
     y = box[1] + (box[3]-box[1]-h)/2 - t
     d.text((x,y), text, font=font, fill=fill)
 
-# ---------- Icons ----------
-def icon(size, maskable=False, out=None):
-    img = Image.new("RGB", (size, size), BG)
-    d = ImageDraw.Draw(img)
-    s = size
-    safe = 0.62 if maskable else 0.78
-    # brass ring
-    r = s*safe/2; c = s/2
-    d.ellipse((c-r, c-r, c+r, c+r), outline=BRASS, width=max(2, int(s*0.018)))
-    centered(d, (0, s*0.02, s, s), "74", bodoni(int(s*safe*0.58), wght=650, opsz=14), IVORY)
-    img.save(out)
-
-for sz in (192, 512):
-    icon(sz, out=f"public/icons/icon-{sz}.png")
-icon(512, maskable=True, out="public/icons/maskable-512.png")
-icon(180, out="public/icons/apple-touch-icon.png")
-icon(64, out="public/icons/favicon-64.png")
-icon(32, out="public/favicon-32.png")
+# App icons and logos are built from the real logo by make_brand.py
 
 # ---------- Demo art: woven-strip motif ----------
 SHOWS = {

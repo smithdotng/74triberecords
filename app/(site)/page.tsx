@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { getLatestEpisodes, getReels, getShowEpisodes, getShows } from "@/lib/data";
 import { ReelRail } from "@/components/reels/ReelRail";
@@ -13,6 +15,7 @@ import { Thumb } from "@/components/ui/Thumb";
 import { EmptyCatalogue } from "@/components/EmptyCatalogue";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = pageMeta({ path: "/" });
 
 export default async function Home() {
   const shows = (await getShows()) ?? [];

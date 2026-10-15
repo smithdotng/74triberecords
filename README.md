@@ -75,6 +75,12 @@ Reels that use licensed music don't come with a video file from the API; those a
 - Add `NEXT_PUBLIC_STUDIO_EMAIL`, `NEXT_PUBLIC_STUDIO_PHONE` and `NEXT_PUBLIC_STUDIO_ADDRESS` to show contact details on both pages.
 - **Emails (optional):** with `SMTP_HOST`, `SMTP_USER` and `SMTP_PASS` set (Hostinger works: `smtp.hostinger.com`, port 465), guests get a confirmation of their request and of the team's decision, and the team gets each new request at `BOOKINGS_EMAIL` (or the first `ADMIN_EMAILS` address).
 
+## Logo and link previews
+
+- The logo files in `public/brand/` (mark, wordmark, stacked logo), the app icons, favicon and the default share image `public/og-default.png` are all generated from the master artwork in `scripts/assets/source/74tribe-logo.png`. To update the logo, replace that file and run `python3 scripts/assets/make_brand.py <fonts_dir>`.
+- Every page has Open Graph and Twitter tags (title, description, canonical URL, image). Shows use their cover art or latest episode thumbnail, episodes use their YouTube thumbnail, and a shared reel link (`/reels?r=…`) previews that reel. Other pages use the default share image. Account, library and admin pages are marked `noindex`.
+- Set `NEXT_PUBLIC_SITE_URL` to your live address (e.g. `https://74tribestudios.com`) **before building**, so preview links and images point to the right domain. Optionally set `NEXT_PUBLIC_TWITTER_HANDLE`.
+
 ## Features
 
 - **Persistent player** — start an episode and keep browsing; it docks as a mini player with play/pause, next/previous and progress, then expands back onto the watch page without restarting. Lock-screen and headset controls via the Media Session API.

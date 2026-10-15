@@ -23,6 +23,7 @@ export default function manifest(): MetadataRoute.Manifest {
       { name: "Shows", url: "/shows", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
       { name: "Your library", url: "/library", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
       { name: "Search", url: "/search", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
+      { name: "Book a session", url: "/book", icons: [{ src: "/icons/icon-192.png", sizes: "192x192" }] },
     ],
   };
 }

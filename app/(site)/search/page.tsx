@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { getShows, searchEpisodes } from "@/lib/data";
 import { EpisodeList } from "@/components/EpisodeList";
 import { SearchBox } from "@/components/SearchBox";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Search" };
+export const metadata: Metadata = pageMeta({ title: "Search", description: "Search every 74 Tribe Studios episode by title, guest or topic.", path: "/search" });
 
 export default async function SearchPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const q = ((await searchParams).q ?? "").trim().slice(0, 100);
