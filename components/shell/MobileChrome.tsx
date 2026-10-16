@@ -7,6 +7,7 @@ import { Icon } from "@/components/ui/Icon";
 import { Logo } from "./Logo";
 import { NAV } from "./nav";
 import { Avatar } from "./UserMenu";
+import { InstallButton } from "./InstallButton";
 
 export function MobileHeader() {
   const { data } = useSession();
@@ -16,7 +17,8 @@ export function MobileHeader() {
       style={{ paddingTop: "env(safe-area-inset-top)", height: "calc(60px + env(safe-area-inset-top))" }}
     >
       <Logo />
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
+      <InstallButton variant="header" />
       <Link href="/book" className="rounded-full border border-brass/60 px-3.5 py-1.5 text-sm font-medium text-brass-soft">
         Book
       </Link>

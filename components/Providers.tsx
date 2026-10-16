@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import { PlayerProvider } from "./player/PlayerProvider";
 import { ToastProvider } from "./ui/Toast";
 import { ServiceWorker } from "./ServiceWorker";
+import "@/lib/install"; // starts listening for the browser's install prompt as early as possible
 
 export function Providers({ children, session }: { children: ReactNode; session: Session | null }) {
   return (

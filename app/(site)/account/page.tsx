@@ -82,8 +82,8 @@ export default async function AccountPage() {
             </Link>
           </li>
         )}
-        <li className="py-2">
-          <InstallButton className="-mx-3" />
+        <li>
+          <InstallButton variant="row" />
         </li>
       </ul>
       <SignOutButton />
